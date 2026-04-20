@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm ngược</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="alarm-sound" src="./sounds/oge.mp3" preload="auto"></audio>
+
+    <div class="timer-container">
+        <div id="motivation-text">SẴN SÀNG CHƯA?</div>
+        
+        <div class="circle-wrap">
+            <svg class="progress-ring" viewBox="0 0 250 250">
+                <circle cx="125" cy="125" r="110" fill="transparent" stroke="rgba(255, 255, 255, 0.1)" stroke-width="12"></circle>
+                <circle id="progress-circle" cx="125" cy="125" r="110" fill="transparent" stroke="#007bff" stroke-width="12" stroke-linecap="round"></circle>
+            </svg>
+            <div class="time-display" id="display">30:00</div>
+        </div>
+
+        <div class="inputs">
+            <input type="number" id="input-minutes" min="0" placeholder="Phút" value="30">
+            <span>:</span>
+            <input type="number" id="input-seconds" min="0" max="59" placeholder="Giây" value="0">
+        </div>
+
+        <div class="controls">
+            <button class="btn-start" id="btn-start">Chiến!</button>
+            <button class="btn-pause" id="btn-pause">Dừng</button>
+            <button class="btn-reset" id="btn-reset">Đặt Lại</button>
+            <button class="btn-sound" id="btn-sound">Nhạc</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
