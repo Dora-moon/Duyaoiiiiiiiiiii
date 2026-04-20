@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 /* Cài đặt chung & Hình nền */
 body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.262), rgba(0, 0, 0, 0.574)), url('./imgs/chat.jpg');
     background-size: cover;
     background-position: center;
     color: #ffffff;
-    font-family: 'Oswald', sans-serif; /* Đã sửa lỗi phông */
+    font-family: 'VT323', monospace; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,24 +15,111 @@ body {
     text-transform: uppercase;
 }
 
-/* Khung kính mờ (Glassmorphism) */
+.weather-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    height: 100vh; 
+    z-index: 100; 
+    pointer-events: none; 
+    overflow: hidden; 
+}
+
+.weather-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    opacity: 0.35; 
+}
+
+/* Nút bật/tắt âm thanh ở góc */
+.sound-control-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 153, 255, 0.2);
+    border: 2px solid #0099ff;
+    color: white;
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.sound-control-btn:hover {
+    background: #0099ff;
+    transform: scale(1.1);
+}
+
+.sound-control-btn.muted {
+    filter: grayscale(1);
+    opacity: 0.5;
+    border-color: #555;
+}
+
+/* Khung kính mờ */
 .timer-container {
+    position: relative;
+    z-index: 200; 
     background: rgba(30, 30, 30, 0.6);
     backdrop-filter: blur(10px);
-    padding: 40px 50px;
+    padding: 40px 60px; 
     border-radius: 20px;
     box-shadow: 0 0 40px rgba(0, 157, 255, 0.5);
     text-align: center;
     border: 2px solid rgba(0, 170, 255, 0.8);
-    width: 400px;
+    width: 600px; /* Thu lại một chút xíu cho vuông vắn */
+    transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+/* HIỆU ỨNG RUNG CHẤN */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-2px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shaking {
+    animation: shake 0.4s infinite;
+    box-shadow: 0 0 60px rgba(255, 0, 0, 0.8) !important;
+    border-color: red !important;
+}
+
+/* Nhân vật Pixel Art */
+.sprite-container {
+    margin-bottom: 10px;
+    height: 110px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pixel-char {
+    height: 100%;
+    image-rendering: pixelated; 
 }
 
 /* Câu khẩu hiệu */
 #motivation-text {
     color: #ccff00;
-    font-size: 1.8rem;
+    font-size: 2.2rem; 
     margin-bottom: 20px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
     height: 40px;
 }
@@ -38,15 +127,12 @@ body {
 /* Vòng tròn đếm ngược */
 .circle-wrap {
     position: relative;
-    width: 250px;
-    height: 250px;
-    margin: 0 auto 30px auto;
+    width: 280px; /* Thu gọn lại để không bị quá cao */
+    height: 280px;
+    margin: 0 auto 25px auto;
 }
 
-.progress-ring {
-    width: 100%;
-    height: 100%;
-}
+.progress-ring { width: 100%; height: 100%; }
 
 .progress-ring__circle, #progress-circle {
     transition: stroke-dashoffset 1s linear;
@@ -54,76 +140,101 @@ body {
     transform-origin: 50% 50%;
 }
 
-/* Chữ số đếm ngược */
 .time-display {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 4.5rem;
+    font-size: 6.5rem; /* Cân đối lại với vòng tròn */
     font-weight: 700;
     text-shadow: 3px 3px 15px rgba(0, 132, 255, 0.8);
     color: #fff;
     line-height: 1;
 }
 
-/* Khu vực nhập thời gian */
+/* KHU VỰC NHẬP THỜI GIAN ĐÃ ĐƯỢC THIẾT KẾ LẠI */
 .inputs {
-    margin-bottom: 20px;
+    margin: 0 auto 25px auto;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    /* Gom cụm input vào một khay tối mờ cho gọn gàng */
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 15px;
+    width: fit-content;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.inputs span {
-    font-size: 2.5rem;
-    font-weight: 700;
+.inputs span { 
+    font-size: 3rem; 
+    font-weight: 700; 
+    color: #0099ff;
+    text-shadow: 0 0 10px rgba(0, 153, 255, 0.5);
+    padding-bottom: 5px; /* Cân chỉnh dấu : ngang hàng với số */
 }
 
 input[type="number"] {
-    width: 70px;
-    font-size: 1.5rem;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.5);
+    width: 75px; 
+    font-size: 3rem; 
+    padding: 5px;
+    background: transparent; /* Xóa nền ô nhập */
     color: #ccff00;
-    border: 2px solid #555;
-    border-radius: 8px;
+    border: none;
+    border-bottom: 3px solid rgba(204, 255, 0, 0.3); /* Chỉ để lại vạch dưới kiểu terminal */
+    border-radius: 0;
     text-align: center;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
+    font-family: 'VT323', monospace; 
+    text-shadow: 0 0 10px rgba(204, 255, 0, 0.6);
+    transition: all 0.3s;
 }
 
 input[type="number"]:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 15px rgba(0, 128, 255, 0.6);
+    border-bottom: 3px solid #ccff00; /* Vạch sáng lên khi click vào */
+    background: rgba(204, 255, 0, 0.05); /* Sáng mờ mờ ở nền */
+}
+
+/* Ẩn hoàn toàn nút mũi tên tăng giảm mặc định của trình duyệt */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield; 
+}
+
+/* NÚT BẤM ĐIỀU KHIỂN PHONG CÁCH RETRO */
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+    margin-top: 10px;
 }
 
 .controls button {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 1rem; /* Giảm nhẹ size chữ xuống 1 xíu */
-    padding: 12px 15px; /* Ép lại viền nút cho thon gọn hơn */
-    margin: 0; /* Xóa margin cũ để tránh xô lệch */
+    font-family: 'VT323', monospace; 
+    font-size: 1.8rem; 
+    padding: 10px 25px; 
+    margin: 0;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     text-transform: uppercase;
-    transition: all 0.2s ease;
-    letter-spacing: 1px;
-    white-space: nowrap; /* Ngăn chữ bên trong nút bị rớt dòng */
+    transition: all 0.1s ease; /* Đổi tốc độ nhanh hơn để hợp với nút nổi */
+    letter-spacing: 2px;
+    /* Thêm hiệu ứng khối 3D cho nút */
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.6);
 }
 
-.controls {
-    display: flex; /* Kích hoạt Flexbox */
-    justify-content: center; /* Căn giữa toàn bộ các nút */
-    align-items: center; /* Đảm bảo các nút cao bằng nhau */
-    flex-wrap: nowrap; /* Ép tất cả nằm trên 1 dòng, không cho rớt dòng */
-    gap: 10px; /* Tạo khoảng cách đều nhau 10px giữa các nút */
-    margin-top: 20px;
+.controls button:active {
+    /* Hiệu ứng lún nút xuống khi click */
+    transform: translateY(5px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.6);
 }
-
 
 
 .btn-start { background-color: #ccff00; color: #000; }

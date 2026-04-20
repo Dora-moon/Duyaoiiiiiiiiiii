@@ -13,9 +13,23 @@
 </head>
 <body>
 
-    <audio id="alarm-sound" src="./sounds/oge.mp3" preload="auto"></audio>
+    <!-- <div class="weather-overlay">
+        <img src="https://i.gifer.com/5GpD.gif" alt="Hiệu ứng thời tiết">
+    </div> -->
 
-    <div class="timer-container">
+    <audio id="alarm-sound" src="./sounds/oge.mp3" preload="auto"></audio>
+    <audio id="tick-sound" src="./sounds/tick.mp3" preload="auto"></audio>
+    <audio id="hover-sound" src="./sounds/hover.mp3" preload="auto"></audio>
+    <audio id="click-sound" src="./sounds/click.mp3" preload="auto"></audio>
+
+    <button id="toggle-tick" class="sound-control-btn" title="Bật/Tắt tiếng tích tắc">🔊</button>
+
+    <div class="timer-container" id="timer-box">
+        
+        <div class="sprite-container">
+            <img id="pixel-char" src="./imgs/cat.gif" alt="Pixel Character">
+        </div>
+
         <div id="motivation-text">SẴN SÀNG CHƯA?</div>
         
         <div class="circle-wrap">
